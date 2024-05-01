@@ -1,0 +1,27 @@
+How to insert DATE into a MySQL column value using Java ?
+
+he JAVA code is as follows to insert date −
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+public class InsertDateFromJava {
+   public static void main(String[] args) {
+      Connection con = null;
+      PreparedStatement ps = null;
+      try {
+         java.util.Date javaDate = new java.util.Date();
+         java.sql.Date mySQLDate = new java.sql.Date(javaDate.getTime());
+         con = DriverManager.getConnection("jdbc :mysql ://localhost :3306/web?useSSL=false", "root","123456");
+         String query = "insert into DemoTable(PassengerId,PassengerName,ArrivalDate) values(?,?,?) ";
+         ps = con.prepareStatement(query);
+         ps.setInt(1, 101);
+         ps.setString(2, "Adam");
+         ps.setDate(3, mySQLDate);
+         ps.executeUpdate();
+         System.out.println("Record is inserted with current Date......");
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+}
